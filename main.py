@@ -75,6 +75,12 @@ def search():
     try:
         with open("data.json", "r") as data_file:
             data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showwarning(
+            title=f"{website} Not Found",
+            message=f"The website {website} was not found"
+        )
+    else:
         if website in data:
             password = data[website]["password"]
             messagebox.showinfo(
@@ -82,12 +88,11 @@ def search():
                 message=f"Password: {password}\n\nCopied successfully"
             )
             pyperclip.copy(password)
-    except FileNotFoundError:
-        messagebox.showwarning(
-            title=f"{website} Not Found",
-            message=f"The website {website} was not found"
-        )
-
+        else:
+            messagebox.showwarning(
+                title=f"{website} Not Found",
+                message=f"The website {website} was not found"
+            )
 
 # ---------------------------- UI SETUP ------------------------------- #
 
